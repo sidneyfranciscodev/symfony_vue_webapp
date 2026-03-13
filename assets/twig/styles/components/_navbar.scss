@@ -1,0 +1,113 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+#navbar {
+    @include position(fixed);
+    background-color: $primary;
+
+    a {
+        color: $white;
+        font-weight: bold;
+    }
+
+    .navigation {
+        @include flex-box(row, space-between);
+        padding: 0.6rem;
+
+        .toggler {
+            background-color: transparent;
+            border: none;
+            z-index: 1000;
+
+            span {
+                display: block;
+                width: 24px;
+                height: 3px;
+                margin: 4px 0;
+                border-radius: 2px;
+                transition: 0.3s;
+                background: $white;
+
+                &.open:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+                &.open:nth-child(2) { opacity: 0; }
+                &.open:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+            }
+        }
+
+        .logo {
+            h1 {
+                color: $white;
+                margin: 0;
+            }
+        }
+
+        .links { display: none; }
+
+        .menu {
+            @include position(absolute);
+            @include flex-box(column);
+            height: 100vh;
+            background-color: $primary;
+            transition: transform 0.3s ease, opacity 0.2s ease;
+            z-index: 999;
+
+            li { padding: 3rem 0; }
+
+            &.visible {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            &.hidden {
+                transform: translateY(-100%);
+                opacity: 0;
+                pointer-events: none;
+            }
+        }
+
+        .icon {
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            margin-right: 6px;
+        }
+    }
+
+    .actions {
+        display: none;
+
+        ul {
+            @include flex-box();
+
+            ul {
+                display: flex;
+
+                li { margin: 1rem 0; }
+            }
+        }
+    }
+
+    @media (min-width: $lg) {
+        @include flex-box(row, space-between);
+
+        li { padding: 0 0.6rem; }
+
+        .navigation {
+            padding: 0.6rem;
+
+            .toggler { display: none; }
+
+            .links {
+                @include flex-box();
+                padding: 0;
+            }
+
+            .menu { display: none; }
+            .icon { display: none; }
+        }
+
+        .actions { display: block; }
+    }
+}
+

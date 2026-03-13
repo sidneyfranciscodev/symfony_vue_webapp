@@ -1,0 +1,26 @@
+/* Navbar */
+@mixin position($position) {
+    position: $position;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+@mixin flex-box($direction: row, $justify: center, $align: center) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify;
+    align-items: $align;
+}
+
+@mixin laptop {
+    @media (min-width: $lg) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media (min-width: $md) {
+        @content;
+    }
+}

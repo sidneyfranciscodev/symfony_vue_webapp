@@ -1,0 +1,18 @@
+@use '../components/hero';
+@use '../components/navbar';
+@use '../components/footer';
+
+@use '../abstracts/variables' as *;
+
+
+#home {
+    #hero {
+        height: 91dvh;
+    }
+
+    @media (min-width: $lg) {
+        #hero {
+            height: 88dvh;
+        }
+    }
+}

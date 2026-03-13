@@ -1,0 +1,30 @@
+@use 'abstracts/variables' as *;
+
+#layout {
+    #navbar,
+    #sidebar {
+        .toggler {
+            background-color: transparent;
+            border: none;
+
+            span {
+                display: block;
+                width: 24px;
+                height: 3px;
+                margin: 4px 0;
+                border-radius: 2px;
+                transition: 0.3s;
+
+                &.open:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+                &.open:nth-child(2) { opacity: 0; }
+                &.open:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+            }
+        }
+    }
+
+    #view {
+        min-height: 100dvh;
+        background-color: $light;
+        padding: 0 1rem;
+    }
+}

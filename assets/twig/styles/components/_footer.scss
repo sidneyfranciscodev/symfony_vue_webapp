@@ -1,0 +1,30 @@
+@use '../abstracts/variables' as *;
+
+footer {
+    background-color: $primary;
+    
+    p, a, h2 { color: $white; }
+    h2, li { margin: 0; padding: 0.6rem 1rem; }
+    li { font-size: 0.9rem; }
+
+    .copyrights {
+        font-size: 0.72rem;
+        margin: 0;
+        padding: 1rem 0;
+        text-align: center;
+    }
+}
+
+@media (min-width: $lg) {
+    footer {
+        display: flex;
+        flex-direction: column;
+
+        .content {
+            ul {
+                display: flex;
+                justify-content: end;
+            }
+        }
+    }
+}

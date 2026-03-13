@@ -1,0 +1,7 @@
+@mixin flex-layout($position, $direction, $align, $bg) {
+    position: $position;
+    display: flex;
+    flex-direction: $direction;
+    align-items: $align;
+    background-color: $bg;
+}

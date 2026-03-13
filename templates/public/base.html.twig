@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}{% endblock %}</title>
+        <meta name="author" content="">
+        <meta name="description" content="{% block meta_description%}{% endblock %}">
+
+        {{ vite_entry_link_tags('public') }}
+        {{ vite_entry_script_tags('public') }}
+    </head>
+    <body>
+        {% block nav %}
+            {{ include('public/components/_navbar.html.twig') }}
+        {% endblock %}
+
+        <div id="view">
+            {% block body %}{% endblock %}
+        </div>
+
+        {% block footer %}
+            {{ include('public/components/_footer.html.twig') }}
+        {% endblock %}
+    </body>
+</html>
