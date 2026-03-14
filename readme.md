@@ -32,7 +32,7 @@ assets/ → Vue + Stimulus + SCSS
 
 ### Docker
 1. Run `docker build -t app .`
-2. Run `docker run app` 
+2. Run `docker run -p 8000:8000 app` 
 
 ---
 
