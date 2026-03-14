@@ -31,7 +31,7 @@ assets/ → Vue + Stimulus + SCSS
 3. Build production: `npm run build` (output to public folder)
 
 ### Docker
-1. Run `docker -t build app .`
+1. Run `docker build -t app .`
 2. Run `docker run app` 
 
 ---
