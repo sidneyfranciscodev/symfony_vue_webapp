@@ -8,6 +8,11 @@
 #home {
     #hero {
         height: 91dvh;
+
+        a { 
+            color: hsl(120, 100%, 25%);
+            text-decoration: underline;
+        }
     }
 
     @media (min-width: $lg) {
