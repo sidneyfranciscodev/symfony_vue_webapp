@@ -4,13 +4,16 @@ FROM node:22.18-alpine AS node-builder
 WORKDIR /app
 
 COPY package*.json ./
+
+# Install npm packages
 RUN npm install
 
 COPY assets ./assets
 COPY vite.config.* ./
 
-# Build the frontend assets in production mode.
 ENV NODE_ENV=production
+
+# Build the frontend assets in production mode.
 RUN npm run build
 
 # Use official PHP with Apache image for the backend service.
@@ -30,11 +33,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer
 
+# Copy project files
 COPY . .
 
 # Copy the built frontend assets 
 COPY --from=node-builder /app/public/build ./public/build
 
+# Set environment variables
 ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV APP_ENV=prod
 ENV APP_DEBUG=0
@@ -43,20 +48,16 @@ ENV APP_DEBUG=0
 RUN composer install --no-dev --optimize-autoloader \
     && php bin/console cache:clear --no-warmup
 
-# Set up Nginx 
+# Set up Nginx config 
 RUN rm -f /etc/nginx/sites-enabled/default 
 COPY ./nginx/default.conf /etc/nginx/sites-enabled/default
-RUN nginx -t
 
-# PHP-FPM
-RUN sed -i 's|listen = .*|listen = 127.0.0.1:9000|' /usr/local/etc/php-fpm.d/www.conf
+# test Nginx
+RUN nginx -t
 
 # Set permissions for the application directory
 RUN mkdir -p var \
     && chown -R www-data:www-data var \
     && chmod -R 755 var
-
-# Expose the port the app runs on
-EXPOSE 80
 
 CMD ["sh", "-c", "php-fpm -D && nginx -g 'daemon off;'"]

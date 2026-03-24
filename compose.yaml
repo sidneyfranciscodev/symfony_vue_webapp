@@ -1,0 +1,19 @@
+services:
+  
+  nginx:
+    image: nginx:alpine
+    ports: 
+      - 80:80
+    networks:
+      - app-network
+  
+  app:
+    build: .
+    networks:
+      - app-network
+      - db-network
+
+  postgres:
+    image: postgres:alpine
+    newtworks:
+      - db-network
