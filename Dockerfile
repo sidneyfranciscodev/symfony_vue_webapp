@@ -16,7 +16,7 @@ ENV NODE_ENV=production
 # Build the frontend assets in production mode.
 RUN npm run build
 
-# Use official PHP with Apache image for the backend service.
+# Use official PHP-FPM image for the backend service.
 FROM php:8.2-fpm
 
 WORKDIR /var/www/app
