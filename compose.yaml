@@ -1,18 +1,53 @@
+# This is a sample docker-compose file for a web application with an nginx reverse proxy, an application server, and a PostgreSQL database.
+# To use this docker-compose file, ensure you have the appropriate Dockerfiles for the nginx and app services in their respective directories.
+# Copy the ./public folder to the ./nginx folder to serve the built static assets directly from nginx.
+# Change the .env file to match your database credentials and other environment variables as needed.
+# Adjust .dockerignore files to exclude unnecessary files from the build context for both nginx and app services.
+
 services:
   nginx:
-    image: nginx:alpine
+    build: 
+      context: nginx/.
+      dockerfile: Dockerfile
     ports: 
       - 80:80
     networks:
-      - app-network
+      - app
+    depends_on:
+      - app
+    restart: 
+      unless-stopped
   
   app:
-    build: .
+    build: 
+      dockerfile: Dockerfile.compose
     networks:
-      - app-network
-      - db-network
+      - app
+      - db
+    restart:
+      unless-stopped
 
-  postgres:
+  database:
     image: postgres:alpine
-    newtworks:
-      - db-network
+    environment:
+      POSTGRES_DB: db_app
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+    healthcheck:
+      test: ["CMD", "pg_isready", "-d", "db_app", "-U", "postgres"]
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    ports:
+      - 5432:5432
+    networks:
+      - db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+
+networks:
+  app:
+  db:
