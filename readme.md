@@ -13,7 +13,7 @@ A modern full-stack web application starter template combining Symfony backend w
 
 ## Prerequisites
 
-- PHP 8.3 with required extensions (JSON, XML, Mbstring, etc.)
+- PHP 8.3 with required extensions (intl, zip, pdo_pgsql, etc.)
 - Node.js 20+ and npm
 - Docker & Docker Compose (for containerized setup)
 - Composer for PHP dependency management
