@@ -31,7 +31,7 @@ RUN npm run build
 
 # Stage 2: Build the final image with PHP-FPM and Nginx
 # Use official php-fpm image for the backend service.
-FROM php:8.2-fpm
+FROM php:8.3-fpm
 
 WORKDIR /var/www/app
 
@@ -73,4 +73,5 @@ RUN mkdir -p var \
     && chown -R www-data:www-data var \
     && chmod -R 755 var
 
+# Define the command to run both PHP-FPM and Nginx when the container starts
 CMD ["sh", "-c", "php-fpm -D && nginx -g 'daemon off;'"]
