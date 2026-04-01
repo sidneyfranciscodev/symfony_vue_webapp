@@ -1,16 +1,51 @@
+# ============================================================
+# DOCKERFILE IGNORE RULES (Production Build)
+# Use these rules when building with: docker build -t app .
+# ============================================================
+
 /node_modules
 /npm-debug.log
 /.env.local
 /.env.*.local
 /.env.dev
-/var
-/var/cache
-/var/logs
+/readme.md
+/Dockerfile
+/Dockerfile.compose
+/compose.yaml
 /public/build
 /vendor
+/var
 /.DS_Store
 /.idea
 /.vscode
 /*.swp
 /*.swo
 /~*
+
+# ============================================================
+# DOCKER COMPOSE IGNORE RULES (Development)
+# For development with docker-compose, comment out rules above
+# and uncomment the rules below to include source files
+# ============================================================
+
+# Comment everything above and uncomment these for docker-compose dev:
+
+# /node_modules
+# /npm-debug.log
+# /.env.local
+# /.env.*.local
+# /.env.dev
+# /assets
+# /nginx
+# /readme.md
+# /Dockerfile
+# /Dockerfile.compose
+# /compose.yaml
+# /vendor
+# /var
+# /.DS_Store
+# /.idea
+# /.vscode
+# /*.swp
+# /*.swo
+# /~*

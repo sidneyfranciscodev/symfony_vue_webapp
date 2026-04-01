@@ -1,0 +1,39 @@
+# This dockerfile is used for the backend service in the docker-compose setup.
+# It sets up a PHP environment with necessary extensions and configurations to run a Symfony application.
+# The nginx configuration is handled separately in the nginx/default.conf file, which is used by the nginx service in the docker-compose setup.
+
+# Use official php-fpm image for the backend service.
+FROM php:8.3-fpm
+
+WORKDIR /var/www/app
+
+# Install system dependencies 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    zip unzip git curl nginx \
+    libsodium-dev libicu-dev libzip-dev libpq-dev libxml2-dev libonig-dev \
+    ca-certificates \
+    && docker-php-ext-install intl pdo_pgsql zip sodium xml mbstring \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install composer globally
+RUN curl -sS https://getcomposer.org/installer | php \
+    && mv composer.phar /usr/local/bin/composer
+
+# Copy the application code to the working directory
+COPY . .
+
+# Set environment variables for Symfony and Composer
+ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV APP_DEBUG=0
+
+# Install PHP dependencies and clear cache for production
+RUN composer install --no-dev --optimize-autoloader \
+    && php bin/console cache:clear --no-warmup
+
+# Set permissions for the application directory
+RUN mkdir -p var \
+    && chown -R www-data:www-data var \
+    && chmod -R 755 var
+
+# Define the command to run the PHP-FPM server when the container starts
+CMD ["php-fpm"]
