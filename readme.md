@@ -5,7 +5,7 @@ A modern full-stack web application starter template combining Symfony backend w
 ## Tech Stack
 
 - **Backend**: Symfony 7 framework with PHP 8.3
-- **Frontend**: Vue 3 with Composition API
+- **Frontend**: Twig SSR with Stimulus + Vue 3 SPA with Composition API
 - **Build Tool**: Vite for fast development and optimized production builds
 - **Styling**: SCSS with organized structure
 - **Containerization**: Docker & Docker Compose
@@ -13,7 +13,7 @@ A modern full-stack web application starter template combining Symfony backend w
 
 ## Prerequisites
 
-- PHP 8.3 with required extensions (intl, zip, pdo_pgsql, etc.)
+- PHP 8.3 with required extensions (intl, zip, pdo, pdo_postgres, etc.)
 - Node.js 20+ and npm
 - Docker & Docker Compose (for containerized setup)
 - Composer for PHP dependency management
@@ -77,24 +77,23 @@ A modern full-stack web application starter template combining Symfony backend w
    Built assets are output to the `public/build/` folder.
 
 ### Option 2: Docker Setup (Recommended for Production)
-
-**Using Docker Compose (All-in-one)**
-```bash
-docker compose up
-```
-This starts:
-- Symfony backend (port 8000)
-- Vue dev server with hot-reload
-- Nginx reverse proxy
-- Database (if configured in compose.yaml)
-
-Environment: `APP_ENV=prod`
-
 **Using Dockerfile**
 ```bash
 docker build -t symfony-vue-app .
 docker run -p 8000:80 symfony-vue-app
 ```
+
+**Using Docker Compose (All-in-one)**
+1. First make sure to build vue assets to `public/` folder.
+2. Copy the `public` folder to `nginx/` folder so nginx can serve static files.
+
+3. Run `docker compose up`
+This starts:
+- Symfony backend
+- Nginx reverse proxy (port 80:80)
+- Database (if configured in compose.yaml)
+
+Environment: `APP_ENV=prod`
 
 ## Environment Configuration
 
@@ -123,18 +122,6 @@ npm run dev
 ```
 
 The frontend dev server will typically run on `http://localhost:5173` and proxy API requests to your backend.
-
-### Building for Production
-
-```bash
-npm run build
-symfony server:start --prod
-```
-
-Or use Docker Compose:
-```bash
-docker compose -f compose.yaml up
-```
 
 ## Available Scripts
 
